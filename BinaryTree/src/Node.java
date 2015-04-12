@@ -1,39 +1,12 @@
-
 public class Node 
 {
-	private int number;
-	private Node leftChild;
-	private Node rightChild;
+	int number;
 	
-	public Node(int newNumber)
-	{
-		number = newNumber;
-		leftChild = null;
-		rightChild = null;
-	}
+	Node leftChild;
+	Node rightChild;
 	
-	public void setNumber(int newNumber)
+	public Node(int number)
 	{
-		number = newNumber;
-	}
-	
-	public int getNumber()
-	{
-		return number;
-	}
-	
-	public Node getLeftChild()
-	{
-		return leftChild;
-	}
-	
-	public Node getRightChild()
-	{
-		return rightChild;
-	}
-	
-	public int addNumber()
-	{
-		
+		this.number = number;
 	}
 }
