@@ -64,8 +64,8 @@ public class Main
 				else if (menuInput == 6)
 				{
 					System.out.println("Root value: " +newBinaryTree.root.number);
-					System.out.println("Height of the tree: " +newBinaryTree.findHeightOfTree());
-					//System.out.println("Number of items in the tree: " +newBinaryTree.numberOfNodes(newBinaryTree.root));
+					System.out.println("Height of the tree: " +newBinaryTree.findHeightOfTree(newBinaryTree.root));
+					System.out.println("Number of items in the tree: " +newBinaryTree.numberOfNodes(newBinaryTree.root));
 					System.out.println();
 				}
 				

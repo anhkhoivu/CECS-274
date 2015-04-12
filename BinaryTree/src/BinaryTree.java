@@ -102,42 +102,49 @@ public class BinaryTree
 	
 	public int numberOfNodes(Node focusNode)
 	{
-		int number = 0;
-		if(focusNode != null)
+		if(focusNode == null)
 		{
-			number++;
+			return 0;
 		}
 		
-		return number;
+		else
+		{
+			int number = 1;
+			number += numberOfNodes(focusNode.leftChild);
+			number += numberOfNodes(focusNode.rightChild);
+			return number;
+		}
 	}
 	
-	public int findHeightOfTree()
+	public int findHeightOfTree(Node focusNode)
 	{
 		int height = 0;
-		int leftNodeHeight = 0; 
-		int rightNodeHeight = 0;
-		int number = root.number;
+		int leftNodeHeight = 0;
+		int rightNodeHeight = 0; 
 		
-		Node focusNode = root
-				;
-		while (focusNode != null)
+		
+		if(focusNode == null)
 		{
-			if(number < )
-			{
-				focusNode = focusNode.leftChild;
-				leftNodeHeight++;
-			}
+			return 0;
+		}
+		
+		else
+		{
+			leftNodeHeight += numberOfNodes(focusNode.leftChild);
+			leftNodeHeight++;
+			rightNodeHeight += numberOfNodes(focusNode.rightChild);
+			rightNodeHeight++;
 			
-			else
-			{
-				focusNode = focusNode.rightChild;
-				rightNodeHeight++;
-			}
 		}
 		
 		if (leftNodeHeight > rightNodeHeight)
 		{
 			height = leftNodeHeight;
+		}
+		
+		else if (leftNodeHeight < rightNodeHeight)
+		{
+			height = rightNodeHeight;
 		}
 		
 		else
