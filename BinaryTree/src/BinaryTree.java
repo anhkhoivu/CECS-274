@@ -43,6 +43,80 @@ public class BinaryTree
 		}
 	}
 	
+	public boolean duplicateNode(int number)
+	{
+		boolean sameNode = false;
+		boolean rootComparison = true;
+		
+		if (root == null) 
+		{
+			sameNode = false;
+		} 
+		
+		else 
+		{
+			Node focusNode = root;
+			
+			while(rootComparison)
+			{
+				if (number < focusNode.number)
+				{
+					sameNode = false;
+					focusNode = focusNode.leftChild;
+					if (focusNode == null) 
+					{
+						sameNode = false;
+						rootComparison = false;
+					}
+				}
+				
+				else if (number > focusNode.number)
+				{
+					sameNode = false;
+					focusNode = focusNode.rightChild;
+					if (focusNode == null)
+					{
+						sameNode = false;
+						rootComparison = false;
+					}
+				}
+				
+				else 
+				{
+					sameNode = true;
+					rootComparison = false;
+				}
+			}
+		}
+		
+		return sameNode;
+	}
+	
+	public int[] fromBinaryTreeToArray(BinaryTree tree, Node focusNode)
+	{
+		int [] intArray = new int[tree.numberOfNodes(focusNode)];
+		if(focusNode != null)
+		{
+			inOrderTraversal(focusNode.leftChild);
+			inOrderTraversal(focusNode.rightChild);
+		}
+		
+		for(int i = 0; i<tree.numberOfNodes(focusNode); i++)
+		{
+			while(focusNode.leftChild != null)
+			{
+				intArray[i] = tree.findNodeNumber(focusNode.leftChild.number); 	
+			}
+			
+			while(focusNode.rightChild != null)
+			{
+				intArray[i] = tree.findNodeNumber(focusNode.rightChild.number); 
+			}
+		}
+		
+		return intArray;
+	}
+	
 	public void inOrderTraversal(Node focusNode)
 	{
 		if(focusNode != null)
@@ -52,6 +126,25 @@ public class BinaryTree
 			inOrderTraversal(focusNode.rightChild);
 		}
 	} 
+	
+	public int findNodeNumber(int number)
+	{
+		Node focusNode = root;
+		while (focusNode.number != number)
+		{
+			if(number < focusNode.number)
+			{
+				focusNode = focusNode.leftChild;
+			}
+			
+			else
+			{
+				focusNode = focusNode.rightChild;
+			}
+		}
+		
+		return focusNode.number;
+	}
 	
 	public Node findNode(int number)
 	{
@@ -119,9 +212,8 @@ public class BinaryTree
 	public int findHeightOfTree(Node focusNode)
 	{
 		int height = 0;
-		int leftNodeHeight = 0;
-		int rightNodeHeight = 0; 
-		
+		int leftNodeHeight = 1;
+		int rightNodeHeight = 1; 
 		
 		if(focusNode == null)
 		{
@@ -131,10 +223,7 @@ public class BinaryTree
 		else
 		{
 			leftNodeHeight += numberOfNodes(focusNode.leftChild);
-			leftNodeHeight++;
-			rightNodeHeight += numberOfNodes(focusNode.rightChild);
-			rightNodeHeight++;
-			
+			rightNodeHeight += numberOfNodes(focusNode.rightChild);	
 		}
 		
 		if (leftNodeHeight > rightNodeHeight)

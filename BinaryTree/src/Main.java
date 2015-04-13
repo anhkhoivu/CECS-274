@@ -5,6 +5,7 @@ public class Main
 	public static void main(String[] args) 
 	{
 			boolean inputLoop = true;
+			boolean sameNode = false;
 			BinaryTree newBinaryTree = new BinaryTree();
 			Scanner scan = new Scanner(System.in);
 			System.out.println("Welcome to the Binary Tree Program!");
@@ -29,6 +30,12 @@ public class Main
 					System.out.print("Please add a number to the tree: ");
 					int numberInput = scan.nextInt();
 					System.out.println();
+					
+					if(newBinaryTree.duplicateNode(numberInput))
+					{
+						System.out.println("Please enter an integer not already on the list.");
+					}
+					
 					newBinaryTree.addNode(numberInput);
 				}
 				
@@ -45,13 +52,16 @@ public class Main
 					System.out.print("Please type in the number you wish to find: ");
 					int numberInput = scan.nextInt();
 					System.out.println();
-					newBinaryTree.findNode(numberInput);
 					System.out.println("The number " +numberInput+ " was found on level " +newBinaryTree.findNodeLevel(numberInput));
 				}
 				
 				else if (menuInput == 4)
 				{
-					inputLoop = true;
+					System.out.print("Tree: [ ");
+					//newBinaryTree.fromBinaryTreeToArray(newBinaryTree, newBinaryTree.root);
+					System.out.print(" ]");
+					System.out.println();
+					System.out.println();
 				}
 				
 				else if (menuInput == 5)
@@ -72,7 +82,7 @@ public class Main
 				else if (menuInput == 7)
 				{
 					inputLoop = false;
-					System.out.println("Goodbye!");
+					System.out.println("Thank you for using my program!");
 				}
 				
 				else
