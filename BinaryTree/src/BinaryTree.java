@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class BinaryTree 
 {
 	Node root;
@@ -374,5 +376,47 @@ public class BinaryTree
 		
 		return replacedNode;
 	}
+	
+	public  void balanceTree(int min, int max, ArrayList<Node> nodeArray)
+	{
+		if(min <= max)
+		{
+			int median = (int)Math.ceil(((double) min +max) /2);
+			addNode(nodeArray.get(median).number);
+			balanceTree(min, median -1, nodeArray);
+			balanceTree( median+1,max,  nodeArray);
+			
+		}
+		
+	}
+	
+	public void fromTreeToArray (Node focusNode, ArrayList<Node> nodeArray)
+	{
+		if(focusNode != null)
+		{
+			fromTreeToArray(focusNode.leftChild, nodeArray);
+			nodeArray.add(focusNode);
+			fromTreeToArray(focusNode.rightChild, nodeArray);			
+			
+		}	
+		
+	}
+	
+	public void balanceTree()
+	{
+		ArrayList<Node> nodeArray = new ArrayList<>();
+		fromTreeToArray(root, nodeArray);
+		
+		//empty the tree
+		for(Node focusNode: nodeArray)
+		{
+			focusNode.leftChild = null;
+			focusNode.rightChild = null;
+		}
+		
+		root = null;
+		balanceTree(0, nodeArray.size()-1, nodeArray);		
+	}
+	
 	
 }

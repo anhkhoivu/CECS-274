@@ -57,9 +57,13 @@ public class Main
 				
 				else if (menuInput == 4)
 				{
-					System.out.print("Tree: [ ");
-					//newBinaryTree.fromBinaryTreeToArray(newBinaryTree, newBinaryTree.root);
-					System.out.print(" ]");
+					newBinaryTree.balanceTree();
+	                System.out.println("The tree is now balanced!");
+	                System.out.println("Left subtree:");
+	                newBinaryTree.inOrderTraversal(newBinaryTree.root.leftChild);
+	                System.out.println();
+	                System.out.println("Right subtree:");
+	                newBinaryTree.inOrderTraversal(newBinaryTree.root.rightChild);
 					System.out.println();
 					System.out.println();
 				}
