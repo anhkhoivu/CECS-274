@@ -123,9 +123,17 @@ public class BinaryTree
 	{
 		if(focusNode != null)
 		{
-			inOrderTraversal(focusNode.leftChild);
+			if(focusNode.leftChild != null)
+			{
+				inOrderTraversal(focusNode.leftChild);
+			}
+			
 			System.out.print(focusNode.number + " ");
-			inOrderTraversal(focusNode.rightChild);
+			
+			if(focusNode.rightChild != null)
+			{
+				inOrderTraversal(focusNode.rightChild);
+			}
 		}
 	} 
 	
@@ -252,8 +260,9 @@ public class BinaryTree
 		Node focusNode = root;
 		
 		boolean isItALeftChild = true;
+		boolean numberFound = false;
 
-		while (focusNode.number != number)
+		while (!numberFound)
 		{
 			parent = focusNode;
 			
@@ -263,10 +272,16 @@ public class BinaryTree
 				focusNode = focusNode.leftChild;
 			}
 			
-			else
+			else if (number > focusNode.number)
 			{
 				isItALeftChild = false;
 				focusNode = focusNode.rightChild;
+			}
+			
+			else
+			{
+				isItALeftChild = false;
+				focusNode = root;
 			}
 			
 			if(focusNode == null)
@@ -279,16 +294,19 @@ public class BinaryTree
 				if(focusNode == root)
 				{
 					root = null;
+					numberFound = true;
 				}
 				
 				else if(isItALeftChild)
 				{
 					parent.leftChild = null;
+					numberFound = true;
 				}
 				
 				else 
 				{
 					parent.rightChild = null;
+					numberFound = true;
 				}
 			}
 			
@@ -297,16 +315,19 @@ public class BinaryTree
 				if(focusNode == root)
 				{
 					root = focusNode.leftChild;
+					numberFound = true;
 				}
 				
 				else if(isItALeftChild)
 				{
 					parent.leftChild = focusNode.leftChild;
+					numberFound = true;
 				}
 				
 				else
 				{
 					parent.rightChild = focusNode.leftChild;
+					numberFound = true;
 				}
 			}
 			
@@ -315,16 +336,19 @@ public class BinaryTree
 				if(focusNode == root)
 				{
 					root = focusNode.rightChild;
+					numberFound = true;
 				}
 				
 				else if(isItALeftChild)
 				{
 					parent.leftChild = focusNode.rightChild;
+					numberFound = true;
 				}
 				
 				else
 				{
 					parent.rightChild = focusNode.rightChild;
+					numberFound = true;
 				}
 			}
 			
@@ -334,16 +358,19 @@ public class BinaryTree
 				if(focusNode == root)
 				{
 					root = replacementNode;
+					numberFound = true;
 				}
 				
 				else if(isItALeftChild)
 				{
 					parent.leftChild = replacementNode;
+					numberFound = true;
 				}
 				
 				else
 				{
 					parent.rightChild = replacementNode;
+					numberFound = true;
 				}
 				
 				replacementNode.leftChild = focusNode.leftChild;
@@ -351,7 +378,7 @@ public class BinaryTree
 			}	
 		}
 		
-		return true;
+		return numberFound;
 	}
 	
 	public Node getReplacementNode(Node newNode)
@@ -385,9 +412,7 @@ public class BinaryTree
 			addNode(nodeArray.get(median).number);
 			balanceTree(min, median -1, nodeArray);
 			balanceTree( median+1,max,  nodeArray);
-			
 		}
-		
 	}
 	
 	public void fromTreeToArray (Node focusNode, ArrayList<Node> nodeArray)
@@ -397,9 +422,7 @@ public class BinaryTree
 			fromTreeToArray(focusNode.leftChild, nodeArray);
 			nodeArray.add(focusNode);
 			fromTreeToArray(focusNode.rightChild, nodeArray);			
-			
 		}	
-		
 	}
 	
 	public void balanceTree()
