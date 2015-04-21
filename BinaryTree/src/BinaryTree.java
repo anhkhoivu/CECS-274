@@ -408,7 +408,7 @@ public class BinaryTree
 	{
 		if(min <= max)
 		{
-			int median = (int)Math.ceil(((double) min +max) /2);
+			int median = (int) Math.ceil(((double) min +max) /2);
 			addNode(nodeArray.get(median).number);
 			balanceTree(min, median -1, nodeArray);
 			balanceTree( median+1,max,  nodeArray);
@@ -440,6 +440,4 @@ public class BinaryTree
 		root = null;
 		balanceTree(0, nodeArray.size()-1, nodeArray);		
 	}
-	
-	
 }
