@@ -1,3 +1,9 @@
+/* Anhkhoi Vu
+ * Program 5 - Binary Tree
+ * CECS 274
+ * Professor Steve Gold
+ */
+
 import java.util.Scanner;
 
 public class Main 
