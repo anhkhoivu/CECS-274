@@ -221,9 +221,6 @@ public class BinaryTree
 	
 	public int findHeightOfTree(Node focusNode)
 	{
-		int height = 0;
-		int leftNodeHeight = 1;
-		int rightNodeHeight = 1; 
 		
 		if(focusNode == null)
 		{
@@ -232,26 +229,9 @@ public class BinaryTree
 		
 		else
 		{
-			leftNodeHeight += numberOfNodes(focusNode.leftChild);
-			rightNodeHeight += numberOfNodes(focusNode.rightChild);	
+			return Math.max(findHeightOfTree(focusNode.leftChild), findHeightOfTree(focusNode.rightChild));
 		}
-		
-		if (leftNodeHeight > rightNodeHeight)
-		{
-			height = leftNodeHeight;
-		}
-		
-		else if (leftNodeHeight < rightNodeHeight)
-		{
-			height = rightNodeHeight;
-		}
-		
-		else
-		{
-			height = rightNodeHeight;
-		}
-		
-		return height;
+
 	}
 	
 	public boolean removeNode(int number)
