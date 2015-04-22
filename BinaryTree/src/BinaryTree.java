@@ -293,6 +293,8 @@ public class BinaryTree
 				parentNode.rightChild = currentNode.rightChild;
 			}
 		}
+		
+		//no left child
 		else if (currentNode.leftChild == null)
 		{
 			if(currentNode == root)
