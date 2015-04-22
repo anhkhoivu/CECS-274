@@ -229,166 +229,137 @@ public class BinaryTree
 		
 		else
 		{
-			return Math.max(findHeightOfTree(focusNode.leftChild), findHeightOfTree(focusNode.rightChild));
+			return 1 + Math.max(findHeightOfTree(focusNode.leftChild), findHeightOfTree(focusNode.rightChild));
 		}
 
 	}
 	
 	public boolean removeNode(int number)
 	{
-		Node parent = root;
-		Node focusNode = root;
+		Node currentNode = root;
+		Node parentNode = root;
 		
-		boolean isItALeftChild = true;
-		boolean numberFound = false;
-
-		while (!numberFound)
+		while(currentNode.number != number)
 		{
-			parent = focusNode;
+			parentNode = currentNode;
 			
-			if(number < focusNode.number)
+			if(number < currentNode.number)
 			{
-				isItALeftChild = true;
-				focusNode = focusNode.leftChild;
+				currentNode = currentNode.leftChild;
 			}
-			
-			else if (number > focusNode.number)
-			{
-				isItALeftChild = false;
-				focusNode = focusNode.rightChild;
-			}
-			
 			else
 			{
-				isItALeftChild = false;
-				focusNode = root;
+				currentNode = currentNode.rightChild;
 			}
 			
-			if(focusNode == null)
+			if(currentNode == null)
 			{
 				return false;
 			}
-			
-			if(focusNode.leftChild == null && focusNode.rightChild == null)
+		}//end while
+		
+		//no children
+		if (currentNode.leftChild == null && currentNode.rightChild == null)
+		{
+			if(currentNode == root)//if is a root
 			{
-				if(focusNode == root)
-				{
 					root = null;
-					numberFound = true;
-				}
-				
-				else if(isItALeftChild)
-				{
-					parent.leftChild = null;
-					numberFound = true;
-				}
-				
-				else 
-				{
-					parent.rightChild = null;
-					numberFound = true;
-				}
 			}
-			
-			else if (focusNode.rightChild == null)
+			else if (currentNode == parentNode.leftChild)
 			{
-				if(focusNode == root)
-				{
-					root = focusNode.leftChild;
-					numberFound = true;
-				}
-				
-				else if(isItALeftChild)
-				{
-					parent.leftChild = focusNode.leftChild;
-					numberFound = true;
-				}
-				
-				else
-				{
-					parent.rightChild = focusNode.leftChild;
-					numberFound = true;
-				}
+				parentNode.leftChild = null; //delete node
 			}
-			
-			else if (focusNode.leftChild == null)
-			{
-				if(focusNode == root)
-				{
-					root = focusNode.rightChild;
-					numberFound = true;
-				}
-				
-				else if(isItALeftChild)
-				{
-					parent.leftChild = focusNode.rightChild;
-					numberFound = true;
-				}
-				
-				else
-				{
-					parent.rightChild = focusNode.rightChild;
-					numberFound = true;
-				}
-			}
-			
 			else
 			{
-				Node replacementNode = getReplacementNode(focusNode);
-				if(focusNode == root)
-				{
-					root = replacementNode;
-					numberFound = true;
-				}
-				
-				else if(isItALeftChild)
-				{
-					parent.leftChild = replacementNode;
-					numberFound = true;
-				}
-				
-				else
-				{
-					parent.rightChild = replacementNode;
-					numberFound = true;
-				}
-				
-				replacementNode.leftChild = focusNode.leftChild;
-				
-			}	
+				parentNode.rightChild = null;
+			}
 		}
 		
-		return numberFound;
-	}
+		//no right child
+		else if (currentNode.rightChild ==null)
+		{
+			//delete node is root and root does  not have right child
+			//then root's left child becomes root
+			if(currentNode == root)
+			{
+				root = currentNode.leftChild;
+			}
+			else if(currentNode == parentNode.leftChild)
+			{
+				parentNode.leftChild = currentNode.leftChild;
+			}
+			else
+			{
+				parentNode.rightChild = currentNode.rightChild;
+			}
+		}
+		else if (currentNode.leftChild == null)
+		{
+			if(currentNode == root)
+			{
+				root = currentNode.rightChild;
+			}
+			else if(currentNode == parentNode.leftChild)
+			{
+				parentNode.leftChild = currentNode.rightChild;
+			}
+			else
+			{
+				parentNode.rightChild = currentNode.leftChild;
+			}
+			
+		}
 	
-	public Node getReplacementNode(Node newNode)
+		//has 2 children
+		else  
+		{
+			Node replaceNode = getReplacementNode(currentNode);
+			
+			if(currentNode == root)
+			{
+				root = replaceNode;
+			}
+			else if (currentNode == parentNode.leftChild)
+			{
+				parentNode.leftChild = replaceNode;
+			}
+			else
+			{
+				parentNode.rightChild = replaceNode;
+			}
+			
+			replaceNode.leftChild = currentNode.leftChild;
+		}
+		
+		return true;	
+	}	
+
+	public Node getReplacementNode(Node replacedNode)
 	{
-		Node replacedParent = newNode;
-		Node replacedNode = newNode;
+		Node currentNode = replacedNode.rightChild;
+		Node replacement = replacedNode;
+		Node replaceParent = replacedNode;
 		
-		Node focusNode = newNode.rightChild;
-		
-		while(focusNode != null)
+		while (currentNode !=null)
 		{
-			replacedParent = replacedNode;
-			replacedNode = focusNode;
-			focusNode = focusNode.leftChild;
+			replaceParent =replacement;
+			replacement = currentNode;
+			currentNode = currentNode.leftChild;
 		}
 		
-		if(replacedNode != replacedNode.rightChild)
+		if(replacement !=replacedNode.rightChild)
 		{
-			replacedParent.leftChild = replacedNode.rightChild;
-			replacedNode.rightChild = newNode.rightChild;
+			replaceParent.leftChild= replacement.rightChild;
+			replacement.rightChild = replacedNode.rightChild;
 		}
-		
-		return replacedNode;
+		return replacement;
 	}
 	
-	public  void balanceTree(int min, int max, ArrayList<Node> nodeArray)
+	public void balanceTree(int min, int max, ArrayList<Node> nodeArray)
 	{
 		if(min <= max)
 		{
-			int median = (int) Math.ceil(((double) min +max) /2);
+			int median = (int) Math.ceil( ( (double) min + max) / 2);
 			addNode(nodeArray.get(median).number);
 			balanceTree(min, median -1, nodeArray);
 			balanceTree( median+1,max,  nodeArray);

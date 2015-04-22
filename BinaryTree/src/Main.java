@@ -113,6 +113,7 @@ public class Main
 						System.out.println("Empty tree.");
 						System.out.println();
 					}
+					
 					else
 					{
 						System.out.print("The tree currently contains: ");
